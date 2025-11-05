@@ -1,26 +1,60 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* ---------- GLOBAL BASE ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Define global color variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-dark: #0b0b0d;
+  --accent-purple: #7b3ff2;
+  --accent-cyan: #00fff2;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---------- BODY ---------- */
+body {
+  @apply text-white antialiased transition-colors duration-700 ease-in-out;
+  background-color: var(--background-dark);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(123, 63, 242, 0.1), transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(0, 255, 242, 0.08), transparent 25%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---------- GLASS EFFECT ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 25px rgba(123, 63, 242, 0.3);
+  border-radius: 1rem;
+}
+
+/* ---------- NEON BUTTON GLOW ---------- */
+.btn-glow {
+  @apply relative inline-block px-5 py-2 font-semibold text-white rounded-lg overflow-hidden transition-all duration-500 ease-in-out;
+  border: 1px solid var(--accent-purple);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 15px rgba(123, 63, 242, 0.7);
+  background-color: rgba(123, 63, 242, 0.2);
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.fade-up {
+  animation: fadeUp 1s ease-out forwards;
 }
