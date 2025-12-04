@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import LimitReachedWrapper from "@/components/ui/LimitReachedWrapper";
+import { LoadingProvider } from "@/context/LoadingContext";
+import GlobalLoading from "@/components/ui/GlobalLoading";
+import { Toaster } from "@/components/ui/sonner";
 
-// ✅ Replacing deprecated Geist fonts with stable Google fonts
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"] });
 
-const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-export const metadata: Metadata = {
-  title: "OmniAI Studio Universe",
-  description: "NextTech.J – Build the future with AI ✨",
+export const metadata = {
+  title: "OmniAI Hub",
+  description: "AI-Powered Video Creation Studio",
 };
 
 export default function RootLayout({
@@ -27,22 +20,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased relative`}
-      >
-        {/* Main content */}
-        {children}
-
-        {/* ✨ Floating Stars for Dark Mode */}
-        <div className="dark:hidden">
-          {/* Light Mode - clean background (no stars) */}
-        </div>
-
-        <div className="dark:block hidden">
-          <div className="stars"></div>
-          <div className="stars"></div>
-          <div className="stars"></div>
-        </div>
+      <body className={`${inter.className} antialiased relative`}>
+        <LoadingProvider>
+          <GlobalLoading />
+          {children}
+          <Toaster />
+          {/* ✨ Floating Stars for Dark Mode */}
+          <div className="dark:block hidden">
+            <div className="stars"></div>
+            <div className="stars"></div>
+            <div className="stars"></div>
+          </div>
+          <LimitReachedWrapper />
+        </LoadingProvider>
       </body>
     </html>
   );

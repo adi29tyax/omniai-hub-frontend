@@ -1,54 +1,86 @@
-// 🔹 FILE: app/register/page.tsx
-
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import api from "@/services/api";
+import { toast } from "sonner";
+import Link from "next/link";
 
-export default function RegisterPage() {
+export default function Register() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = async () => {
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
     try {
-      await axios.post("http://localhost:8000/auth/register", {
-        email,
-        password,
-      });
+      await api.post("/auth/register", { email, password });
+      toast.success("Registration successful! Please login.");
       router.push("/login");
-    } catch {
-      alert("Registration failed");
+    } catch (error: any) {
+      console.error("Registration Error:", error);
+      toast.error(error.response?.data?.detail || "Registration failed.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="light h-screen flex justify-center items-center">
-      <div className="card w-[350px] shadow-xl">
-        <h2 className="text-xl font-bold mb-4 text-center">Create Account ✨</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none stars"></div>
 
-        <input
-          placeholder="Email"
-          className="mb-3"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <form
+        onSubmit={handleRegister}
+        className="w-full max-w-md bg-gray-900 border border-gray-800 p-8 rounded-xl shadow-2xl z-10"
+      >
+        <h2 className="text-3xl font-bold mb-6 text-center text-purple-400">
+          Create Account 🚀
+        </h2>
 
-        <input
-          placeholder="Password"
-          className="mb-4"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
+            <input
+              className="w-full bg-gray-800 border border-gray-700 rounded p-3 text-white focus:border-purple-500 focus:outline-none"
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <button onClick={handleRegister}>Sign Up</button>
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
+            <input
+              className="w-full bg-gray-800 border border-gray-700 rounded p-3 text-white focus:border-purple-500 focus:outline-none"
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+        </div>
 
-        <p className="text-sm text-center mt-4">
-          Already have an account? <Link href="/login">Sign In</Link>
+        <button
+          type="submit"
+          className="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded transition disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? "Creating Account..." : "Register"}
+        </button>
+
+        <p className="mt-4 text-center text-sm text-gray-500">
+          Already have an account?{" "}
+          <Link href="/login" className="text-purple-400 hover:underline">
+            Login here →
+          </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
