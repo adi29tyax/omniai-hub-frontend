@@ -1,0 +1,21 @@
+
+> hub-frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.5
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./app/assistant/panels/SceneAssistant.tsx:65:51
+Type error: Property 'confidence' does not exist on type 'Suggestion'.
+
+  63 |                                 </span>
+  64 |                                 <span className="text-[10px] text-green-400">
+> 65 |                                     {Math.round(s.confidence * 100)}% match
+     |                                                   ^
+  66 |                                 </span>
+  67 |                             </div>
+  68 |                         </div>

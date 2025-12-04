@@ -1,0 +1,21 @@
+
+> hub-frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.5
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./components/ui/sonner.tsx:3:26
+Type error: Cannot find module 'next-themes' or its corresponding type declarations.
+
+  1 | "use client"
+  2 |
+> 3 | import { useTheme } from "next-themes"
+    |                          ^
+  4 | import { Toaster as Sonner } from "sonner"
+  5 |
+  6 | type ToasterProps = React.ComponentProps<typeof Sonner>

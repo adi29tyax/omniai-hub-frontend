@@ -4,7 +4,7 @@ import { useState } from 'react';
 import AssistantPanel from '../components/AssistantPanel';
 import AssistantChat from '../components/AssistantChat';
 import AssistantActionButtons from '../components/AssistantActionButtons';
-import { assistantQuery, AssistantAction } from '../../../services/assistant';
+import { assistantQuery, AssistantAction } from 'services/assistant';
 
 interface AudioAssistantProps {
     isOpen: boolean;

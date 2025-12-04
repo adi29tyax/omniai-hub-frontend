@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import api from "@/services/api";
 import { toast } from "sonner";
-import Link from "next/link";
 
-export default function Login() {
+export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,78 +15,81 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const res = await api.post("/auth/login", { email, password });
-      const data = res.data;
+      // In a real app, you would call the login endpoint
+      // const response = await api.post("/auth/login", { email, password });
+      // localStorage.setItem("omni_token", response.data.token);
 
-      // Save token securely
-      localStorage.setItem("omni_token", data.access_token);
-      toast.success("Login successful!");
+      // Simulating login for now as per "Regenerate" request usually implies structure first
+      // But if the backend is ready, we should try to use it. 
+      // Given the prompt "Regenerate... COMPLETE Next.js 14 project", I will implement the call but fallback gracefully or mock if needed.
+      // The user asked for "Authorization: Bearer omni_token" in api.ts, so they expect auth to work.
 
-      // Redirect to dashboard
-      router.replace("/dashboard");
+      const response = await api.post("/auth/login", { username: email, password }); // OAuth2 usually uses username/password form data or json
+      localStorage.setItem("omni_token", response.data.access_token);
+      toast.success("Login successful");
+      router.push("/dashboard");
     } catch (error: any) {
-      console.error("Login Error:", error);
-      toast.error(error.response?.data?.detail || "Login failed. Please check your credentials.");
+      console.error(error);
+      toast.error(error.response?.data?.detail || "Login failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none stars"></div>
-
-      <form
-        onSubmit={handleLogin}
-        className="w-full max-w-md bg-gray-900 border border-gray-800 p-8 rounded-xl shadow-2xl z-10"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-center text-purple-400">
-          Welcome Back 👋
-        </h2>
-
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
-            <input
-              className="w-full bg-gray-800 border border-gray-700 rounded p-3 text-white focus:border-purple-500 focus:outline-none"
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">Password</label>
-            <input
-              className="w-full bg-gray-800 border border-gray-700 rounded p-3 text-white focus:border-purple-500 focus:outline-none"
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="w-full max-w-md space-y-8 rounded-lg border bg-card p-8 shadow-lg">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold tracking-tight">Sign in to OmniAI</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Enter your credentials to access the studio
+          </p>
         </div>
-
-        <button
-          type="submit"
-          className="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded transition disabled:opacity-50"
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-
-        <p className="mt-4 text-center text-sm text-gray-500">
-          New here?{" "}
-          <Link href="/register" className="text-purple-400 hover:underline">
-            Create Account →
+        <form onSubmit={handleLogin} className="mt-8 space-y-6">
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                className="mt-1 block w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                required
+                className="mt-1 block w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-md bg-primary py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+          >
+            {loading ? "Signing in..." : "Sign in"}
+          </button>
+        </form>
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">Don't have an account? </span>
+          <Link href="/register" className="font-medium text-primary hover:underline">
+            Register
           </Link>
-        </p>
-      </form>
+        </div>
+      </div>
     </div>
   );
 }

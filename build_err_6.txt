@@ -1,0 +1,56 @@
+
+> hub-frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.5
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/28) ...
+   Generating static pages (7/28) 
+   Generating static pages (14/28) 
+   Generating static pages (21/28) 
+ Γ£ô Generating static pages (28/28)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Γöî Γùï /                                    495 B            88 kB
+Γö£ Γùï /_not-found                          876 B          88.3 kB
+Γö£ Γùï /billing/failure                     1.41 kB        95.7 kB
+Γö£ Γùï /billing/success                     1.38 kB        95.7 kB
+Γö£ Γùï /chat                                156 B          87.6 kB
+Γö£ Γùï /dashboard                           847 B          95.1 kB
+Γö£ Γùï /dashboard/admin                     2.05 kB        89.5 kB
+Γö£ Γùï /dashboard/ide                       3.45 kB        90.9 kB
+Γö£ Γùï /dashboard/usage                     2.06 kB        89.5 kB
+Γö£ Γùï /director                            1.78 kB         117 kB
+Γö£ Γùï /director/assets/audio               2.71 kB         112 kB
+Γö£ Γùï /director/scenes                     293 B          87.8 kB
+Γö£ ╞Æ /director/scenes/[id]                1.9 kB         89.4 kB
+Γö£ Γùï /director/shots                      292 B          87.8 kB
+Γö£ ╞Æ /director/shots/[id]                 1.81 kB        89.3 kB
+Γö£ Γùï /director/stories                    798 B          95.1 kB
+Γö£ ╞Æ /director/stories/[id]               4.82 kB         150 kB
+Γö£ Γùï /director/timeline                   2.87 kB        90.3 kB
+Γö£ Γùï /director/timeline/export            2.87 kB         112 kB
+Γö£ Γùï /director/workflow                   930 B          95.2 kB
+Γö£ Γùï /login                               1.49 kB         126 kB
+Γö£ Γùï /logout                              446 B          87.9 kB
+Γö£ Γùï /models                              156 B          87.6 kB
+Γö£ Γùï /pricing                             2.44 kB        89.9 kB
+Γö£ Γùï /profile                             156 B          87.6 kB
+Γö£ Γùï /projects                            1.84 kB        89.3 kB
+Γö£ Γùï /register                            1.47 kB         126 kB
+Γöö Γùï /settings                            156 B          87.6 kB
++ First Load JS shared by all            87.5 kB
+  Γö£ chunks/7023-08beb423901c3d39.js      31.5 kB
+  Γö£ chunks/fd9d1056-f8c5d1e71c81c54d.js  53.6 kB
+  Γöö other shared chunks (total)          2.3 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

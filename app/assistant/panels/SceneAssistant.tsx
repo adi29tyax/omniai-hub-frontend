@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Sparkles, RefreshCw, ArrowRight } from "lucide-react";
-import { assistantQuery, Suggestion } from "../../../services/assistant";
+import { assistantQuery, Suggestion } from "services/assistant";
 import { gatherContext } from "../context";
 import { LoadingSkeleton } from "../../../components/ui/LoadingSkeleton";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import { assistantQuery, Suggestion } from "../../../services/assistant";
+import { assistantQuery, Suggestion } from "services/assistant";
 import { gatherContext } from "../context";
 
 interface InlineAutocompleteProps {
