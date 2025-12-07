@@ -20,9 +20,9 @@ export default function PricingPage() {
                 alert(`Razorpay Order Created: ${order_id} (Mock Integration)`);
                 router.push("/billing/success");
             }
-        } catch (error) {
-            console.error("Upgrade failed", error);
-            router.push("/billing/failure");
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         }
     };
 

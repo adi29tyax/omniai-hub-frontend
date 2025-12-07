@@ -1,5 +1,5 @@
 // services/billing.ts
-import api from "./api";
+import { api } from "./api";
 
 export async function createStripeCheckout(planId: string) {
     // Placeholder implementation

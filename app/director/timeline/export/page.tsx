@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import api from '@/services/api';
+import { api } from '@/services/api';
 import { VideoPlayer } from '@/app/director/components/VideoPlayer';
 
 export default function ExportPage() {
@@ -17,8 +17,9 @@ export default function ExportPage() {
                 scene_order: ["scene_uuid_1", "scene_uuid_2"] // Mocked
             });
             setEpisodeUrl(res.data.url);
-        } catch (e) {
-            console.error(e);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         } finally {
             setCompiling(false);
         }

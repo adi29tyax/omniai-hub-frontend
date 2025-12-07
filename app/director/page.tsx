@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
-import api from '../../services/api';
+import { api } from '../../services/api';
 
 export default function DirectorDashboard() {
     const [projects, setProjects] = useState<any[]>([]);
@@ -20,8 +20,9 @@ export default function DirectorDashboard() {
                 // Fetch projects
                 const projectsRes = await api.get('/director/projects/list/user_123'); // TODO: Use actual user ID
                 setProjects(projectsRes.data);
-            } catch (err) {
-                console.error(err);
+            } catch (err: any) {
+                console.error("AUTH ERROR:", err?.response?.data || err);
+                alert(err?.response?.data?.detail || "Something went wrong");
             } finally {
                 setLoading(false);
             }

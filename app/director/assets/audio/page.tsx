@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import api from '@/services/api';
+import { api } from '@/services/api';
 import { AudioControls } from '@/app/director/components/AudioControls';
 
 export default function AudioWorkspace() {
@@ -20,8 +20,9 @@ export default function AudioWorkspace() {
                 emotion
             });
             setGeneratedAudio([res.data, ...generatedAudio]);
-        } catch (e) {
-            console.error(e);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         } finally {
             setLoading(false);
         }

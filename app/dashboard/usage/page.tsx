@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Activity, Database, Film, Zap } from "lucide-react";
-import api from "@/services/api";
+import { api } from "@/services/api";
 
 export default function UsagePage() {
     const [usage, setUsage] = useState<any>(null);

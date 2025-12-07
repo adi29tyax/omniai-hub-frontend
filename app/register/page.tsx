@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import api from "@/services/api";
+import { registerUser } from "@/services/auth";
 import { toast } from "sonner";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,12 +17,16 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.post("/auth/register", { email, password });
+      const res = await registerUser({
+        name,
+        email,
+        password,
+      });
       toast.success("Registration successful. Please login.");
       router.push("/login");
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.response?.data?.detail || "Registration failed");
+    } catch (err: any) {
+      console.error("AUTH ERROR:", err?.response?.data || err);
+      alert(err?.response?.data?.detail || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -38,6 +43,19 @@ export default function RegisterPage() {
         </div>
         <form onSubmit={handleRegister} className="mt-8 space-y-6">
           <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium">
+                Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                required
+                className="mt-1 block w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium">
                 Email

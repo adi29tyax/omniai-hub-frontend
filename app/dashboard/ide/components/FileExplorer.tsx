@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import api from '@/services/api';
+import { api } from '@/services/api';
 import FileTree from './FileTree';
 import FileToolbar from './FileToolbar';
 import FileContextMenu from './FileContextMenu';
@@ -30,8 +30,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ projectId, onFileSelect, ac
             const flatFiles = res.data;
             const tree = buildTreeFromFlat(flatFiles);
             setFiles(tree);
-        } catch (err) {
-            console.error("Failed to fetch files", err);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         } finally {
             setLoading(false);
         }
@@ -90,8 +91,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ projectId, onFileSelect, ac
                 content: ''
             });
             fetchFiles();
-        } catch (err) {
-            console.error("Failed to create file", err);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         }
     };
 
@@ -113,8 +115,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ projectId, onFileSelect, ac
                 is_folder: true
             });
             fetchFiles();
-        } catch (err) {
-            console.error("Failed to create folder", err);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         }
     };
 
@@ -125,8 +128,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ projectId, onFileSelect, ac
         try {
             await api.delete(`/project-files/delete/${contextMenu.node.id}`);
             fetchFiles();
-        } catch (err) {
-            console.error("Failed to delete", err);
+        } catch (err: any) {
+            console.error("AUTH ERROR:", err?.response?.data || err);
+            alert(err?.response?.data?.detail || "Something went wrong");
         }
     };
 

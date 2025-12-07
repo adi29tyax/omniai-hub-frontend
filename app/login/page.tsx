@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import api from "@/services/api";
+import { loginUser } from "@/services/auth";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -16,22 +16,19 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      // In a real app, you would call the login endpoint
-      // const response = await api.post("/auth/login", { email, password });
-      // localStorage.setItem("omni_token", response.data.token);
-
-      // Simulating login for now as per "Regenerate" request usually implies structure first
-      // But if the backend is ready, we should try to use it. 
-      // Given the prompt "Regenerate... COMPLETE Next.js 14 project", I will implement the call but fallback gracefully or mock if needed.
-      // The user asked for "Authorization: Bearer omni_token" in api.ts, so they expect auth to work.
-
-      const response = await api.post("/auth/login", { username: email, password }); // OAuth2 usually uses username/password form data or json
-      localStorage.setItem("omni_token", response.data.access_token);
+      const res = await loginUser({
+        email,
+        password,
+      });
+      console.log("Login response:", res.data);
+      if (res.data?.access_token) {
+        localStorage.setItem("omni_token", res.data.access_token);
+      }
       toast.success("Login successful");
       router.push("/dashboard");
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.response?.data?.detail || "Login failed");
+    } catch (err: any) {
+      console.error("AUTH ERROR:", err?.response?.data || err);
+      alert(err?.response?.data?.detail || "Something went wrong");
     } finally {
       setLoading(false);
     }

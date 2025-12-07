@@ -1,5 +1,5 @@
 // services/assistant.ts
-import api from "./api";
+import { api } from "./api";
 
 export async function getSceneAssistantHelp(sceneId: string) {
     return { message: "Assistant help placeholder for scene " + sceneId };
